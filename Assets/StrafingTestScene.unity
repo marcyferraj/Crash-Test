@@ -190,8 +190,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184319850}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13830517, y: 0.3699461, z: -0.05579626, w: 0.9170051}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.35905606, y: 0, z: 0, w: 0.93331605}
+  m_LocalPosition: {x: 0, y: 0.00000008940697, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -413,8 +413,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842220568}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12160242, y: 0.3708998, z: -0.049057893, w: 0.9193691}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.37597317, y: 0, z: 0, w: 0.92663056}
+  m_LocalPosition: {x: 0, y: 0.00000008940697, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -552,8 +552,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884479727}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12160244, y: 0.37089983, z: -0.04905791, w: 0.9193691}
-  m_LocalPosition: {x: -0.59433615, y: 2.5, z: -0.6167201}
+  m_LocalRotation: {x: -0.3927219, y: -0.00000006915685, z: -0.000000029532098, w: 0.9196573}
+  m_LocalPosition: {x: 1.48742, y: 0.4, z: 0.24344003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -666,11 +666,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9384ab8608cdc3d479fe89cd51eed48f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Cinemachine::Cinemachine.CinemachineOrbitalTransposer
-  m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 2.5, z: -3}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_BindingMode: 4
+  m_FollowOffset: {x: 0, y: 0.4, z: -1.3}
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -789,11 +789,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7eae9656f88a043946a0500ff47b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StrafingMovement
-  moveSpeed: 5
-  cameraTransform: {fileID: 884479732}
-  animator: {fileID: 1333466640}
-  controller: {fileID: 0}
-  moveInput: {x: 0, y: 0}
 --- !u!114 &1333466645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -806,8 +801,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72881603062075a4c897b112dee0912d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAiming
+--- !u!114 &1333466646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333466638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef289506519af543ae24198e05a9e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterMovement
+  moveSpeed: 5
+  cameraTransform: {fileID: 884479732}
+  animator: {fileID: 1333466640}
+--- !u!114 &1333466647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333466638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7ce16623bbf5843af6f33a31a04a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAiming
   turnSpeed: 15
-  mainCamera: {fileID: 0}
 --- !u!1001 &1378553033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -879,6 +900,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f3ef8a6c99e8de4d9449d0b1f021ea2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1333466645}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f3ef8a6c99e8de4d9449d0b1f021ea2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1333466647}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5f3ef8a6c99e8de4d9449d0b1f021ea2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1333466646}
   m_SourcePrefab: {fileID: 100100000, guid: 5f3ef8a6c99e8de4d9449d0b1f021ea2, type: 3}
 --- !u!1 &1525968732
 GameObject:
@@ -937,7 +964,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 0
     m_SpeedMode: 0
     m_MaxSpeed: 2
     m_AccelTime: 0.2
@@ -988,13 +1015,13 @@ MonoBehaviour:
     m_RecenteringTime: 2
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
-  m_BindingMode: 5
+  m_BindingMode: 4
   m_SplineCurvature: 0.2
   m_Orbits:
   - m_Height: 4.5
     m_Radius: 1.75
   - m_Height: 2.5
-    m_Radius: 3
+    m_Radius: 5
   - m_Height: 0.4
     m_Radius: 1.3
   m_LegacyHeadingBias: 3.4028235e+38
@@ -1011,7 +1038,7 @@ Transform:
   m_GameObject: {fileID: 1525968732}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.59433615, y: 2.5, z: -0.6167201}
+  m_LocalPosition: {x: 1.48742, y: 0.4, z: 0.24344003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1093,11 +1120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9384ab8608cdc3d479fe89cd51eed48f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Cinemachine::Cinemachine.CinemachineOrbitalTransposer
-  m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 2.5, z: -3}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_BindingMode: 4
+  m_FollowOffset: {x: 0, y: 0.4, z: -1.3}
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -1345,8 +1372,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806730791}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10490371, y: 0.37172875, z: -0.042321157, w: 0.92142385}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.39272174, y: 0, z: 0, w: 0.91965735}
+  m_LocalPosition: {x: 0, y: 0.00000008940697, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1426,11 +1453,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9384ab8608cdc3d479fe89cd51eed48f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Cinemachine::Cinemachine.CinemachineOrbitalTransposer
-  m_BindingMode: 5
-  m_FollowOffset: {x: 0, y: 2.5, z: -3}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_BindingMode: 4
+  m_FollowOffset: {x: 0, y: 0.4, z: -1.3}
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
