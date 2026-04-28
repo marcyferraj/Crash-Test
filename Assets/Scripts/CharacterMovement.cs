@@ -3,109 +3,157 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class CharacterMovement : MonoBehaviour
 {
+    [Header("Movement")]
     public float moveSpeed = 5f;
-    public float jumpHeight = 2f;
-    public float gravity = -9.81f;
-
+    public float airControl = 8f;
     public Transform cameraTransform;
     public Animator animator;
 
-    private CharacterController controller;
-    private float verticalVelocity;
+    [Header("Jump & Gravity")]
+    public float jumpHeight = 2f;
+    public float gravity = -9.81f;
+    public float terminalVelocity = 53f;
 
-    private bool wasGrounded;
+    [Header("Ground Check")]
+    public float groundedOffset = 0.2f;
+    public float groundedRadius = 0.3f;
+    public LayerMask groundLayers;
+
+    [Header("Timeouts")]
+    public float jumpTimeout = 0.5f;
+
+    private CharacterController controller;
+
+    private float verticalVelocity;
+    private float jumpTimeoutDelta;
+
+    private Vector3 horizontalVelocity;
+    private Vector3 inputDir;
+
+    private bool grounded;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        jumpTimeoutDelta = jumpTimeout;
     }
 
     void Update()
     {
-        // =========================
-        // INPUT
-        // =========================
+        GroundedCheck();
+        JumpAndGravity();
+        Move();
+        UpdateAnimator();
+    }
+
+    // =========================
+    // GROUND CHECK
+    // =========================
+    void GroundedCheck()
+    {
+        Vector3 spherePos = transform.position + Vector3.down * groundedOffset;
+
+        grounded = Physics.CheckSphere(
+            spherePos,
+            groundedRadius,
+            groundLayers,
+            QueryTriggerInteraction.Ignore
+        );
+
+        animator.SetBool("IsGrounded", grounded);
+    }
+
+    // =========================
+    // JUMP + GRAVITY
+    // =========================
+    void JumpAndGravity()
+    {
+        if (grounded)
+        {
+            if (verticalVelocity < 0f)
+                verticalVelocity = -2f;
+
+            if (Input.GetButtonDown("Jump") && jumpTimeoutDelta <= 0f)
+            {
+                verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+                animator.SetTrigger("Jump");
+            }
+
+            if (jumpTimeoutDelta >= 0f)
+                jumpTimeoutDelta -= Time.deltaTime;
+        }
+        else
+        {
+            jumpTimeoutDelta = jumpTimeout;
+        }
+
+        if (verticalVelocity < terminalVelocity)
+            verticalVelocity += gravity * Time.deltaTime;
+    }
+
+    // =========================
+    // MOVE 
+    // =========================
+    void Move()
+    {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 input = new Vector3(h, 0f, v).normalized;
+        inputDir = new Vector3(h, 0f, v).normalized;
 
         Vector3 moveDir =
-            Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * input;
+            Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * inputDir;
 
-        bool grounded = controller.isGrounded;
-
-        // =========================
-        // LANDING DETECTION
-        // =========================
-        if (!wasGrounded && grounded && verticalVelocity <= 0f)
-        {
-            animator.SetTrigger("Land");
-            verticalVelocity = -2f;
-        }
-
-        wasGrounded = grounded;
-
-        // =========================
-        // JUMP
-        // =========================
-        if (grounded && Input.GetButtonDown("Jump"))
-        {
-            verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            animator.SetBool("IsJumping", true);
-        }
-
-        // =========================
-        // GRAVITY
-        // =========================
-        verticalVelocity += gravity * Time.deltaTime;
-
-        // Keep player "stuck" to ground slightly
-        if (grounded && verticalVelocity < 0f)
-        {
-            verticalVelocity = -2f;
-        }
-
-        // =========================
-        // AIR STATE
-        // =========================
-        bool isInAir = !grounded;
-
-        bool isJumping = isInAir && verticalVelocity > 0.1f;
-        bool isFalling = isInAir && verticalVelocity < 0.1f;
+        Vector3 targetHorizontal = moveDir * moveSpeed;
 
         if (grounded)
         {
-            animator.SetBool("IsJumping", false);
+            horizontalVelocity = targetHorizontal;
+        }
+        else
+        {
+            horizontalVelocity += (targetHorizontal - horizontalVelocity)
+                * airControl * Time.deltaTime;
         }
 
-        // =========================
-        // MOVE CHARACTER
-        // =========================
-        Vector3 velocity = moveDir * moveSpeed;
+        Vector3 velocity = horizontalVelocity;
         velocity.y = verticalVelocity;
 
         controller.Move(velocity * Time.deltaTime);
+    }
 
-        // =========================
-        // MOVEMENT CHECK
-        // =========================
-        bool isMoving = input.magnitude > 0.1f;
+    // =========================
+    // ANIMATOR 
+    // =========================
+    void UpdateAnimator()
+    {
+        float speed = new Vector3(controller.velocity.x, 0, controller.velocity.z).magnitude;
 
-        // =========================
-        // ANIMATOR PARAMETERS
-        // =========================
+        animator.SetFloat("Speed", speed);
         animator.SetBool("IsGrounded", grounded);
-        animator.SetBool("IsJumping", isJumping);
-        animator.SetBool("IsFalling", isFalling);
-        animator.SetBool("IsMoving", isMoving);
 
-        // =========================
-        // MOVE BLEND VALUES
-        // =========================
+        Vector3 moveDir =
+            Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * inputDir;
+
         Vector3 localMove = transform.InverseTransformDirection(moveDir);
 
         animator.SetFloat("MoveX", localMove.x, 0.1f, Time.deltaTime);
         animator.SetFloat("MoveY", localMove.z, 0.1f, Time.deltaTime);
+
+        bool isMoving = grounded && inputDir.magnitude > 0.1f;
+        animator.SetBool("IsMoving", isMoving);
+    }
+
+    // =========================
+    // DEBUG
+    // =========================
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+
+        Vector3 spherePos = transform.position + Vector3.down * groundedOffset;
+
+        Gizmos.DrawWireSphere(spherePos, groundedRadius);
     }
 }
