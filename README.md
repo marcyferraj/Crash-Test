@@ -6,3 +6,8 @@
 
 ### Meet our Team:
 - Cinntoastmin: Project Manager & Developer
+- J.D.: Animator & Rigger & Developer
+- Jacob: Head of Q.A. & Developer
+- A.J.: Lead Composer & Developer
+- M.F.: Creative Director & Developer
+- VoidIsEmpty: Lead Developer
