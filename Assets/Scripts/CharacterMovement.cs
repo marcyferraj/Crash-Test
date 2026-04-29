@@ -22,6 +22,11 @@ public class CharacterMovement : MonoBehaviour
     [Header("Timeouts")]
     public float jumpTimeout = 0.5f;
 
+    [Header("Evade")]
+    public float evadeDistance = 5f;
+    public float evadeDuration = 0.2f;
+    public float evadeCooldown = 1f;
+
     private CharacterController controller;
 
     private float verticalVelocity;
@@ -31,8 +36,14 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 inputDir;
 
     private bool grounded;
-    private PlayerSounds playerSounds;
     private bool wasGrounded;
+
+    private float evadeTimer;
+    private float evadeCooldownTimer;
+    private bool isEvading;
+    private Vector3 evadeDirection;
+
+    private PlayerSounds playerSounds;
 
     void Start()
     {
@@ -45,10 +56,16 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         GroundedCheck();
+
+        HandleEvadeInput();
+
         JumpAndGravity();
+
         Move();
+
         UpdateAnimator();
     }
+
 
     // =========================
     // GROUND CHECK
@@ -68,6 +85,50 @@ public class CharacterMovement : MonoBehaviour
     }
 
     // =========================
+    // EVADE INPUT
+    // =========================
+    void HandleEvadeInput()
+    {
+        if (evadeCooldownTimer > 0f)
+            evadeCooldownTimer -= Time.deltaTime;
+
+        if (isEvading || evadeCooldownTimer > 0f)
+            return;
+
+        if (!grounded)
+            return;
+
+        float h = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (h < -0.1f)
+            {
+                StartEvade(-1);
+            }
+            else if (h > 0.1f)
+            {
+                StartEvade(1);
+            }
+        }
+    }
+
+    void StartEvade(int direction)
+    {
+        isEvading = true;
+        evadeTimer = evadeDuration;
+        evadeCooldownTimer = evadeCooldown;
+
+        Vector3 right = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * Vector3.right;
+        evadeDirection = right * direction;
+
+        animator.SetTrigger(direction == -1 ? "EvadeLeft" : "EvadeRight");
+
+
+        playerSounds?.PlayEvade();
+    }
+
+    // =========================
     // JUMP + GRAVITY
     // =========================
     void JumpAndGravity()
@@ -82,7 +143,7 @@ public class CharacterMovement : MonoBehaviour
                 verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
                 animator.SetTrigger("Jump");
-                playerSounds.PlayJump();
+                playerSounds?.PlayJump();
             }
 
             if (jumpTimeoutDelta >= 0f)
@@ -98,17 +159,32 @@ public class CharacterMovement : MonoBehaviour
 
         if (!wasGrounded && grounded)
         {
-            playerSounds.PlayLand();
+            playerSounds?.PlayLand();
         }
 
         wasGrounded = grounded;
     }
 
     // =========================
-    // MOVE 
+    // MOVE
     // =========================
     void Move()
     {
+        if (isEvading)
+        {
+            evadeTimer -= Time.deltaTime;
+
+            float speed = evadeDistance / evadeDuration;
+            Vector3 evadeVelocity = evadeDirection * speed;
+
+            controller.Move(evadeVelocity * Time.deltaTime);
+
+            if (evadeTimer <= 0f)
+                isEvading = false;
+
+            return;
+        }
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -136,18 +212,17 @@ public class CharacterMovement : MonoBehaviour
 
         if (grounded && horizontalVelocity.magnitude > 0.1f)
         {
-            playerSounds.PlayFootstep();
+            playerSounds?.PlayFootstep();
         }
     }
 
     // =========================
-    // ANIMATOR 
+    // ANIMATOR
     // =========================
     void UpdateAnimator()
     {
         float speed = new Vector3(controller.velocity.x, 0, controller.velocity.z).magnitude;
 
-        animator.SetFloat("Speed", speed);
         animator.SetBool("IsGrounded", grounded);
 
         Vector3 moveDir =
@@ -158,8 +233,7 @@ public class CharacterMovement : MonoBehaviour
         animator.SetFloat("MoveX", localMove.x, 0.1f, Time.deltaTime);
         animator.SetFloat("MoveY", localMove.z, 0.1f, Time.deltaTime);
 
-        bool isMoving = grounded && inputDir.magnitude > 0.1f;
-        animator.SetBool("IsMoving", isMoving);
+        animator.SetBool("IsMoving", grounded && inputDir.magnitude > 0.1f);
     }
 
     // =========================
