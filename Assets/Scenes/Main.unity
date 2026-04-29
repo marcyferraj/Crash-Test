@@ -3902,6 +3902,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1071012509893646920, guid: fdca8753340ce954fbb0d7a4dd9e72fb, type: 3}
   m_PrefabInstance: {fileID: 1245551314}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1262078075 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7469028346093015574, guid: 0894eb49ecec6384cad22c39f058c50e, type: 3}
+  m_PrefabInstance: {fileID: 1366817352}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1310427311 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3546271861565254857, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
@@ -6302,7 +6307,7 @@ PrefabInstance:
     - target: {fileID: 3641886197860030851, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 959495426}
+      objectReference: {fileID: 1262078075}
     - target: {fileID: 4097683119729063404, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
       propertyPath: m_Name
       value: Vehicle Prefab
