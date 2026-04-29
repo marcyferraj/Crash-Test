@@ -13,10 +13,11 @@ GameObject:
   - component: {fileID: 935960677304430388}
   - component: {fileID: 5622380569909857477}
   - component: {fileID: 1192176482581816411}
-  - component: {fileID: 3641886197860030851}
+  - component: {fileID: -819317329926026328}
+  - component: {fileID: 6465358753883134780}
   m_Layer: 0
   m_Name: Vehicle Prefab
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,9 +140,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &3641886197860030851
+  m_Constraints: 80
+  m_CollisionDetection: 2
+--- !u!114 &-819317329926026328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,9 +151,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4097683119729063404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8208b349d3dc8664285ead3612b00167, type: 3}
+  m_Script: {fileID: 11500000, guid: b189221d8a86cb4458466780c921e74c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
-  player: {fileID: 0}
-  updateInterval: 1
-  forceMultiplier: 1
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleAI_TunnelVision
+  player: {fileID: 7848790198472329388, guid: 0894eb49ecec6384cad22c39f058c50e, type: 3}
+  moveSpeed: 8
+  turnSpeed: 60
+--- !u!114 &6465358753883134780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4097683119729063404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88e7412d1021dd4f8a5ae373ee8fad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleCrashDestroy
