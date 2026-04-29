@@ -31,11 +31,15 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 inputDir;
 
     private bool grounded;
+    private PlayerSounds playerSounds;
+    private bool wasGrounded;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         jumpTimeoutDelta = jumpTimeout;
+
+        playerSounds = GetComponent<PlayerSounds>();
     }
 
     void Update()
@@ -78,6 +82,7 @@ public class CharacterMovement : MonoBehaviour
                 verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
 
                 animator.SetTrigger("Jump");
+                playerSounds.PlayJump();
             }
 
             if (jumpTimeoutDelta >= 0f)
@@ -90,6 +95,13 @@ public class CharacterMovement : MonoBehaviour
 
         if (verticalVelocity < terminalVelocity)
             verticalVelocity += gravity * Time.deltaTime;
+
+        if (!wasGrounded && grounded)
+        {
+            playerSounds.PlayLand();
+        }
+
+        wasGrounded = grounded;
     }
 
     // =========================
@@ -121,6 +133,11 @@ public class CharacterMovement : MonoBehaviour
         velocity.y = verticalVelocity;
 
         controller.Move(velocity * Time.deltaTime);
+
+        if (grounded && horizontalVelocity.magnitude > 0.1f)
+        {
+            playerSounds.PlayFootstep();
+        }
     }
 
     // =========================
