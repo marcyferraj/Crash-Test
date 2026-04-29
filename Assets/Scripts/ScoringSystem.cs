@@ -27,7 +27,6 @@ public class ScoringSystem : MonoBehaviour
     }
     void SetText()
     {
-        PlaceholderScoreText.text = "Score: " + score.ToString();
-        
+        PlaceholderScoreText.text = "Score: " + score.ToString(); 
     }
 }
