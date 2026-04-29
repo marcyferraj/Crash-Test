@@ -51,4 +51,9 @@ public class PlayerSounds : MonoBehaviour
     {
         audioSource.PlayOneShot(landClip);
     }
+
+    public void PlayEvade()
+    {
+        audioSource.PlayOneShot(jumpClip); // Reusing jump sound for evade, can be changed to a different clip if desired
+    }
 }
