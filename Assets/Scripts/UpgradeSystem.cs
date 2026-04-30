@@ -3,7 +3,13 @@ using TMPro;
 using System.Collections.Generic;
 public class UpgradeSystem : MonoBehaviour
 {
-    private List<string> Upgrades = new List<string> { "Increase Movement Speed", "Upgrade 2", "Upgrade 3", "Upgrade 4", "Upgrade 5", "Upgrade 6" };
+    private List<string> Upgrades = new List<string> 
+    { 
+        "Increase Movement Speed",
+        "Enemy Multiplier",
+        "Score Multiplier",
+        "Jump Height",
+        "Luck"};
     public  TMP_Text option1;
     public  TMP_Text option2;
     public  TMP_Text option3;
@@ -34,15 +40,13 @@ public class UpgradeSystem : MonoBehaviour
 
     public void Upgrade()
     {
-        
         Menu.gameObject.SetActive(true);
         upgrade1 = Random.Range(0, Upgrades.Count);
         option1.text = Upgrades[upgrade1];
         upgrade2 = Random.Range(0, Upgrades.Count);
         option2.text = Upgrades[upgrade2];
         upgrade3 = Random.Range(0, Upgrades.Count);
-        option3.text = Upgrades[upgrade3];
-        
+        option3.text = Upgrades[upgrade3];  
     }
 
     public void Upgrade1Picked()

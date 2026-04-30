@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.UI;
 using UnityEngine;
 
 public class VehicleCrashDestroy : MonoBehaviour
@@ -6,20 +8,28 @@ public class VehicleCrashDestroy : MonoBehaviour
     public float spawnInvincibilityTime = 1.5f;
 
     private float spawnTime;
+    public ScoringSystem scoreSystem;
 
     private void Start()
     {
-        spawnTime = Time.time;
+        spawnTime = Time.time;        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         bool spawnProtected = Time.time - spawnTime < spawnInvincibilityTime;
 
+        if (scoreSystem == null)
+        {
+            Debug.LogWarning("ScoringSystem Not Assigned");
+        }
+
         if (collision.gameObject.CompareTag("Obstacle") ||
             collision.transform.root.CompareTag("Obstacle"))
         {
+            
             Destroy(gameObject);
+            scoreSystem.AddScore();
             return;
         }
 
@@ -30,6 +40,7 @@ public class VehicleCrashDestroy : MonoBehaviour
 
             if (playerLife != null)
             {
+                scoreSystem.MinusScore();
                 playerLife.Die();
             }
 
@@ -44,9 +55,14 @@ public class VehicleCrashDestroy : MonoBehaviour
             {
                 return;
             }
-
+            scoreSystem.AddScore();
             Destroy(gameObject);
             return;
         }
+    }
+
+    public void initScoring(ScoringSystem scoringSystem)
+    {
+        scoreSystem = scoringSystem;
     }
 }

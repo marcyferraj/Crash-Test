@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -105,8 +106,21 @@ public class EnemyManager : MonoBehaviour
             chosenSpawnPoint.rotation
         );
 
-        ApplyDifficultyToVehicle(newVehicle);
+        ScoringSystem scoringSystem = player.GetComponent<ScoringSystem>();
 
+        if (scoringSystem == null)
+        {
+            Debug.LogError("Player is missing Scoring System");
+        }
+        else
+        {
+            VehicleCrashDestroy crash = newVehicle.GetComponent<VehicleCrashDestroy>();
+            if (crash != null)
+            {
+                crash.initScoring(scoringSystem);
+            }
+        }
+        ApplyDifficultyToVehicle(newVehicle);
         activeVehicles.Add(newVehicle);
     }
 
