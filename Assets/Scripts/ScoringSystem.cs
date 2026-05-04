@@ -7,8 +7,11 @@ public class ScoringSystem : MonoBehaviour
 {
     public static int score;
     public TextMeshProUGUI PlaceholderScoreText;
-    public UpgradeSystem upgrade; 
+    public UpgradeSystem upgrade;
     private bool upgradeAvailable = false;
+    public static int scoreMultiplier = 1;
+    public int upgradeInterval = 50;
+    private int nextUpgradeAt = 50;
     void Start()
     {
         score = 1;
@@ -16,24 +19,24 @@ public class ScoringSystem : MonoBehaviour
         upgrade.GetComponent<UpgradeSystem>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         SetText();
-        if(score == 50)
+
+        if (score >= nextUpgradeAt)
         {
             upgrade.Upgrade();
+            nextUpgradeAt += upgradeInterval;
         }
-        
     }
     void SetText()
     {
-        PlaceholderScoreText.text = "Score: " + score.ToString(); 
+        PlaceholderScoreText.text = "Score: " + score.ToString();
     }
 
     public void AddScore()
     {
-        score++;
+        score += scoreMultiplier;
         SetText();
     }
 
