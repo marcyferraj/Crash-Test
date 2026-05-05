@@ -4476,19 +4476,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6001814301389891084, guid: 0894eb49ecec6384cad22c39f058c50e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.68865764
+      value: 0.6886577
       objectReference: {fileID: 0}
     - target: {fileID: 6001814301389891084, guid: 0894eb49ecec6384cad22c39f058c50e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.29407775
+      value: -0.29407778
       objectReference: {fileID: 0}
     - target: {fileID: 6001814301389891084, guid: 0894eb49ecec6384cad22c39f058c50e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.60952467
+      value: 0.6095247
       objectReference: {fileID: 0}
     - target: {fileID: 6001814301389891084, guid: 0894eb49ecec6384cad22c39f058c50e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.2602856
+      value: 0.26028562
       objectReference: {fileID: 0}
     - target: {fileID: 6721345717939171257, guid: 0894eb49ecec6384cad22c39f058c50e, type: 3}
       propertyPath: m_YAxis.m_MaxSpeed
@@ -7178,6 +7178,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1f4b6eadf05eea64ea2e9067f729c906, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 1f4b6eadf05eea64ea2e9067f729c906, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -7232,6 +7236,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1f4b6eadf05eea64ea2e9067f729c906, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 1f4b6eadf05eea64ea2e9067f729c906, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: 1f4b6eadf05eea64ea2e9067f729c906, type: 3}
+      propertyPath: m_ProvidesContacts
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7527,6 +7539,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1366817353}
     - target: {fileID: 1192176482581816411, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192176482581816411, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
       propertyPath: m_Constraints
       value: 80
       objectReference: {fileID: 0}
@@ -7534,13 +7550,21 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1622120758429359972, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1622120758429359972, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3546271861565254857, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 3546271861565254857, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.54
+      value: 1.06
       objectReference: {fileID: 0}
     - target: {fileID: 3546271861565254857, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7582,10 +7606,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vehicle Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 5633387113305484359, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: c5f8cfdbf35eea042bfcea749a4e7bc2, type: 3}
     - target: {fileID: 6465358753883134780, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
       propertyPath: scoreSystem
       value: 
       objectReference: {fileID: 1366817354}
+    - target: {fileID: 7383021348519492475, guid: 315ca264deb3e2841909be8cad0fae6c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

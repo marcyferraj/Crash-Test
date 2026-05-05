@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class VehicleCrashDestroy : MonoBehaviour
@@ -8,6 +9,8 @@ public class VehicleCrashDestroy : MonoBehaviour
 
     private float spawnTime;
     public ScoringSystem scoreSystem;
+    
+    public bool wasInDodgeZone = false;
 
     private void Start()
     {

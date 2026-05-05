@@ -12,6 +12,19 @@ public class ScoringSystem : MonoBehaviour
     public static int scoreMultiplier = 1;
     public int upgradeInterval = 50;
     private int nextUpgradeAt = 50;
+
+    public static ScoringSystem Instance { get; private set; }
+
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         score = 1;
